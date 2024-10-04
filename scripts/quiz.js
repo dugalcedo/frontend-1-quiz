@@ -1,5 +1,6 @@
 import { dom, onDomVarsLoaded } from "./dom.js";
 import { fetchQuiz, NUMBER_OF_QUESTIONS } from "./quizFetcher.js"
+import { Countdown } from "./countdown.js";
 
 // Quiz state
 let currentQuiz = null;
@@ -7,6 +8,17 @@ let currentQuestion = null;
 let currentQuestionIndex = -1;
 let canGuess = true;
 let points = 0;
+
+// countdown config
+const questionCountdown = new Countdown(10); 
+questionCountdown.onTick = time => {
+    dom.quizQTime.innerText = time.toFixed(1) + "s"
+}
+questionCountdown.onComplete = () => {
+    dom.quizQTime.innerText = "TIMES UP!"
+    canGuess = false;
+    dom.quizNextBtn.classList.remove("hidden");
+}
 
 // Eftersom den här filen importeras innan "loadDomVars" anropas i main-filen
 // Det här är kanske inte super genomtänkt, känns lite konstigt men det funkar
@@ -27,6 +39,7 @@ function resetQuiz() {
     currentQuestionIndex = -1;
     canGuess = true;
     points = 0;
+    questionCountdown.clear();
 }
 
 
@@ -40,7 +53,9 @@ function startNewQuiz(quiz) {
 
 function nextQuestion() {
     currentQuestionIndex++;
-    currentQuestion = currentQuiz.questions[currentQuestionIndex]
+    currentQuestion = currentQuiz.questions[currentQuestionIndex];
+    questionCountdown.clear();
+    questionCountdown.startFromBeginning();
     if (currentQuestionIndex > NUMBER_OF_QUESTIONS-1) {
         endQuiz()
     } else {
@@ -70,6 +85,7 @@ function createAnswer(answer) {
     const answerBtn = document.createElement("button")
     answerBtn.classList.add("answer")
     answerBtn.innerHTML = answer
+    answerBtn.dataset.answer = answer
     answerBtn.addEventListener("click", handleAnswerBtn)
     return answerBtn
 }
@@ -77,17 +93,27 @@ function createAnswer(answer) {
 function handleAnswerBtn(e) {
     if (!canGuess) return;
     canGuess = false;
-    const answer = e.target.innerHTML;
+    const answer = e.target.dataset.answer;
+
+    // determine correct
     const isCorrect = answer === currentQuestion.correctAnswer;
     if (isCorrect) points++;
+    e.target.classList.add(isCorrect ? "correct" : "incorrect")
     dom.quizQResult.setAttribute("class", isCorrect ? "correct" : "incorrect");
     dom.quizQResult.innerText = isCorrect ? "Korrekt!" : "Fel."
+
+    // show next button
     dom.quizNextBtn.classList.remove("hidden");
+
+    // clear timer
+    questionCountdown.clear()
+    dom.quizQTime.innerText = ""
 }
 
 // båda visar quizen och gömmar quiz-resultatet
 function showQuiz() {
     dom.quizSection.classList.remove("hidden")
+    dom.quizResultSection.classList.add("hidden")
 }
 
 // båda visar resultatet och gömmar quizen
@@ -98,6 +124,7 @@ function showResult() {
     dom.qrcDifficulty = quiz.difficulty
 
     dom.quizResultSection.classList.remove("hidden")
+    dom.quizSection.classList.add("hidden")
 }
 
 function endQuiz() {

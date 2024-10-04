@@ -2,11 +2,15 @@ import { loadRoutes, checkHash } from "./router.js";
 import { fetchQuiz, fetchCategories } from "./quizFetcher.js";
 import { startNewQuiz } from "./quiz.js";
 import { loadDomVars, dom } from "./dom.js";
+import { renderHighScores } from "./profile.js";
 
 // laddar routes
 await loadRoutes();
 checkHash();
-window.addEventListener("hashchange", checkHash)
+window.addEventListener("hashchange", () => {
+    checkHash()
+    if (window.location.hash === "#profile") renderHighScores()
+})
 
 // laddar DOM variabler
 loadDomVars()
@@ -34,3 +38,5 @@ dom.startQuizForm.addEventListener("submit", async (e) => {
     startNewQuiz(quiz)
 })
 
+// laddar highscores
+await renderHighScores()

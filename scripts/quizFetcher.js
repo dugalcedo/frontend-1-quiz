@@ -1,4 +1,4 @@
-export const NUMBER_OF_QUESTIONS = 1
+export const NUMBER_OF_QUESTIONS = 10
 const API_ROOT = `https://opentdb.com/api.php?amount=${NUMBER_OF_QUESTIONS}&category={cat}&difficulty={diff}&type=multiple`
 
 function shuffle(arr) {
@@ -40,13 +40,25 @@ async function fetchQuiz(categoryId, difficulty) {
             correctAnswer: r.correct_answer
         }
     })
-    console.log("questions:", questions)
+
+    // fix the question that implies Red Hot Chilli Peppers is punk when they are actually garbage
+    sanitizeRHCP(questions)
+
     return {
         questions,
         difficulty,
         categoryId,
         category: data.results[0].category,
     };
+}
+
+function sanitizeRHCP(questions) {
+    questions.forEach(q => {
+        if (q.question.includes("Californication") && q.question.includes("punk rock")) {
+            q.answers.push("Red Hot Chili Peppers is not punk rock")
+            q.correctAnswer = "Red Hot Chili Peppers is not punk rock"
+        }
+    })
 }
 
 export {

@@ -12,13 +12,19 @@ const elements = {
     answersEl: "#answers",
     questionH2: "#question h2",
     quizNextBtn: "#quiz-next-btn",
+    quizQTime: "#quiz-q-time",
     quizQResult: "#quiz-q-result",
     quizResultSection: "#quiz-result",
     quizResultMessageP: "#quiz-result-message",
     quizResultPointsSpan: "#quiz-result-points",
     qrcCategory: "#qrc-category",
     qrcDifficulty: "#qrc-difficulty",
-    qrcTryAgain: "#qrc-try-again"
+    qrcTryAgain: "#qrc-try-again",
+
+    // profile
+    easyTableBody: "#easy tbody",
+    mediumTableBody: "#medium tbody",
+    hardTableBody: "#hard tbody",
 }
 
 function loadDomVars() {

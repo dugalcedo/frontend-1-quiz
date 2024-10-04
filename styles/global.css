@@ -1,5 +1,86 @@
+* {
+    font-family: "Fredoka", sans-serif;
+}
+
+h1, h2 {
+    font-family: "Bungee Inline", sans-serif;
+}
+
+html, body {
+    height: 100vh;
+}
+
+body {
+    background-image: url("https://external-content.duckduckgo.com/iu/?u=https%3A%2F%2Fmedia.giphy.com%2Fmedia%2FbqLzjC1qqacTK%2Fgiphy.gif&f=1&nofb=1&ipt=0fe4c71bdcac9f224101261094d3d860ef4db1bbfaca5c51c0eb02d054ce89b0&ipo=images");
+
+    overflow-y: hidden;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    color: white;
+    gap: 2rem;
+}
+
+#logo {
+    margin-top: 1.5rem;
+    text-align: center;
+}
+
+#logo h1 {
+    font-size: 4rem;
+    font-weight: normal;
+}
+
+#logo p a {
+    color: white;
+}
+
+button {
+    border: 0;
+    padding: 0.5rem 1rem;
+    font-size: 1.5rem;
+    border-radius: .5rem;
+    cursor: pointer;
+}
+
+header nav {
+    display: flex;
+    gap: 1rem;
+}
+
+header nav a {
+    color: purple;
+    display: block;
+    background-color: white;
+    padding: .5rem;
+    font-size: 2rem;
+    border-radius: .5rem;
+    text-decoration: none;
+    margin-top: 2rem;
+}
+
+header nav a:hover {
+    background-color: purple;
+    color: white;
+}
+
+main {
+    background-color: white;
+    color: #300030;
+    flex-grow: 1;
+    width: 1000px;
+    max-width: 95%;
+    padding: 1.5rem;
+    border-radius: 1rem;
+    overflow-y: auto;
+}
+
+footer {
+    min-height: 100px;
+}
+
 .hidden {
-    display: none;
+    display: none !important;
 }
 
 .correct {
@@ -8,4 +89,42 @@
 
 .incorrect {
     color: maroon;
+}
+
+#backdrop {
+    position: absolute;
+    top: 0;
+    left: 0;
+    z-index: -1;
+    width: 100vw;
+    height: 100vh;
+    background-color: rgb(112, 87, 141);
+    opacity: 0.95;
+}
+
+#start-page {
+    display: flex;
+    height: 100%;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+}
+
+#start-page h2 {
+    font-size: 2rem;
+    margin-bottom: 2rem;
+}
+
+#start-page select, #start-page button {
+    padding: 0.6rem;
+    font-size: 1.5rem;
+    background-color: #300030;
+    color: white;
+    border-radius: .5rem;
+    border: 0;
+    cursor: pointer;
+}
+
+#start-page button {
+    background-color: #790079;
 }

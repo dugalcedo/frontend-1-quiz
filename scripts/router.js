@@ -62,6 +62,7 @@ async function loadRoutes() {
 function checkHash() {
     hideAllRoutes()
     const hash = window.location.hash || "#";
+    console.log(hash)
     const route = routes.find(r => r.hash === hash);
     if (!route) return showNotFoundRoute();
     showRoute(hash);
