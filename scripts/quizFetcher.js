@@ -1,9 +1,13 @@
-const API_ROOT = "https://opentdb.com/api.php?amount=10&category={cat}&difficulty={diff}&type=multiple"
+export const NUMBER_OF_QUESTIONS = 1
+const API_ROOT = `https://opentdb.com/api.php?amount=${NUMBER_OF_QUESTIONS}&category={cat}&difficulty={diff}&type=multiple`
 
 function shuffle(arr) {
     const shuffled = []
-    for (let i = 0; i < arr.length; i++) {
-        shuffled.push(arr[Math.floor(Math.random()*arr.length)])
+    const len = arr.length
+    for (let i = 0; i < len; i++) {
+        const r = Math.floor(Math.random()*arr.length)
+        shuffled.push(arr[r])
+        arr.splice(r, 1)
     }
     return shuffled
 }
@@ -25,9 +29,10 @@ function createQuizURI(categoryId, difficulty) {
 async function fetchQuiz(categoryId, difficulty) {
     const uri = createQuizURI(categoryId, difficulty)
     const res = await fetch(uri)
-    if(!res.ok) throw null;
+    if(!res.ok) throw [categoryId, difficulty, res];
     const data = await res.json()
-    if (data.response_code !== 0) throw null;
+    console.log("data:", data)
+    if (data.response_code !== 0) throw [categoryId, difficulty, res, data];
     const questions = data.results.map((r)=>{
         return {
             question: r.question,
@@ -35,7 +40,13 @@ async function fetchQuiz(categoryId, difficulty) {
             correctAnswer: r.correct_answer
         }
     })
-    return questions;
+    console.log("questions:", questions)
+    return {
+        questions,
+        difficulty,
+        categoryId,
+        category: data.results[0].category,
+    };
 }
 
 export {

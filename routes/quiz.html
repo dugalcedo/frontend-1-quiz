@@ -1,11 +1,58 @@
 <h1>Quiz</h1>
 
-<div id="quiz">
+<section id="quiz">
     <div id="question">
         <h2></h2>
     </div>
     <div id="answers">
 
     </div>
-    <button>Next</button>
-</div>
+    <div id="quiz-footer">
+        <div id="quiz-q-time">
+        
+        </div>
+        <div id="quiz-time">
+        
+        </div>
+        <div id="quiz-q-result">
+        
+        </div>
+        <div id="quiz-controls">
+            <button id="quiz-next-btn" class="hidden">
+                Nästa
+            </button>
+        </div>
+    </div>
+</section>
+
+<section id="quiz-result" class="hidden">
+    <h2>
+        Du fick
+        <span id="quiz-result-points"></span>
+        av 10 poäng!
+    </h2>
+    <p id="quiz-result-message">
+        <!-- 
+            Det var ett nytt högsta betyg!
+                or
+            Det var samma som ditt högsta betyg!
+                or
+            Det var inte din bästa...
+         -->
+    </p>
+    <div id="quiz-result-controls">
+        <a href="#profile">
+            Se mina högsta betyg
+        </a>
+        <a href="#">
+            Skapa en ny quiz
+        </a>
+        <button id="qrc-try-again">
+            <p>Försök samma quiz igen</p>
+            <p>
+                <span id="qrc-category"></span>
+                <span id="qrc-difficulty"></span>
+            </p>
+        </button>
+    </div>
+</section>

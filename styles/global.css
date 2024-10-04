@@ -1,3 +1,11 @@
-main.hidden {
+.hidden {
     display: none;
+}
+
+.correct {
+    color: green;
+}
+
+.incorrect {
+    color: maroon;
 }
