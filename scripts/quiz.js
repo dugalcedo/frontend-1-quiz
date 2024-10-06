@@ -171,7 +171,6 @@ function saveHighScore() {
 }
 
 function updateQuestionMeter() {
-    dom.quizMeter.value = currentQuestionIndex+1
     dom.quizProgressTextSpan.innerText = currentQuestionIndex+1
 }
 

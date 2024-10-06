@@ -20,7 +20,6 @@ const elements = {
     qrcCategory: "#qrc-category",
     qrcDifficulty: "#qrc-difficulty",
     qrcTryAgain: "#qrc-try-again",
-    quizMeter: "#quiz meter",
     quizProgressTextSpan: "#quiz-progress span",
     quizTimeMeter: "#quiz-time-meter meter",
 
