@@ -13,6 +13,7 @@ let points = 0;
 const questionCountdown = new Countdown(10); 
 questionCountdown.onTick = time => {
     dom.quizQTime.innerText = time.toFixed(1) + "s"
+    dom.quizTimeMeter.value = time
 }
 questionCountdown.onComplete = () => {
     dom.quizQTime.innerText = "TIMES UP!"
@@ -40,6 +41,7 @@ function resetQuiz() {
     canGuess = true;
     points = 0;
     questionCountdown.clear();
+    updateQuestionMeter()
 }
 
 
@@ -56,6 +58,7 @@ function nextQuestion() {
     currentQuestion = currentQuiz.questions[currentQuestionIndex];
     questionCountdown.clear();
     questionCountdown.startFromBeginning();
+    updateQuestionMeter()
     if (currentQuestionIndex > NUMBER_OF_QUESTIONS-1) {
         endQuiz()
     } else {
@@ -102,6 +105,13 @@ function handleAnswerBtn(e) {
     dom.quizQResult.setAttribute("class", isCorrect ? "correct" : "incorrect");
     dom.quizQResult.innerText = isCorrect ? "Korrekt!" : "Fel."
 
+    // show correct
+    if (!isCorrect) {
+        const buttons = e.target.parentElement.querySelectorAll(":scope button");
+        const correctButton = ([...buttons]).find(b => b.innerHTML === currentQuestion.correctAnswer);
+        correctButton.style.outline = "5px solid green";
+    }
+
     // show next button
     dom.quizNextBtn.classList.remove("hidden");
 
@@ -138,8 +148,9 @@ function getHighScore() {
 }
 
 function forceSaveScore() {
+    const category = currentQuiz.category.replaceAll("&amp;", "&")
     const scores = JSON.parse(localStorage.getItem("dugquiz")||"{}")
-    scores[`${currentQuiz.category}/${currentQuiz.difficulty}`] = points;
+    scores[`${category}/${currentQuiz.difficulty}`] = points;
     localStorage.setItem("dugquiz", JSON.stringify(scores))
 }
 
@@ -157,6 +168,11 @@ function getHighScoreMessage() {
 function saveHighScore() {
     const currentHighScore = getHighScore()
     if (points > currentHighScore) forceSaveScore()
+}
+
+function updateQuestionMeter() {
+    dom.quizMeter.value = currentQuestionIndex+1
+    dom.quizProgressTextSpan.innerText = currentQuestionIndex+1
 }
 
 export {

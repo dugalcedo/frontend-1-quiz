@@ -4,13 +4,23 @@ import { startNewQuiz } from "./quiz.js";
 import { loadDomVars, dom } from "./dom.js";
 import { renderHighScores } from "./profile.js";
 
+
 // laddar routes
 await loadRoutes();
 checkHash();
 window.addEventListener("hashchange", () => {
     checkHash()
-    if (window.location.hash === "#profile") renderHighScores()
+    switch(window.location.hash) {
+        case "#profile": {
+            renderHighScores()
+            break
+        }
+    }
+
 })
+
+// om användaren refreshade på quiz sidan
+if (window.location.hash === "#quiz") window.location.hash = "#";
 
 // laddar DOM variabler
 loadDomVars()
@@ -30,6 +40,7 @@ categories.forEach(cat => {
     dom.quizCategorySelect.append(option)
 })
 
+// handle start quiz
 dom.startQuizForm.addEventListener("submit", async (e) => {
     e.preventDefault()
     const difficulty = dom.startQuizForm.difficulty.value

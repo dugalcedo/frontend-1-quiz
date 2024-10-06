@@ -35,5 +35,34 @@
 }
 
 #quiz-q-time {
+    display: flex;
+    gap: 1rem;
+    align-items: center;
     font-size: 2rem;
+}
+
+#quiz-result-controls {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 1.5rem;
+    padding-top: 1.5rem;
+}
+
+#quiz-result-controls a {
+    font-size: 1.5rem;
+}
+
+#quiz-progress {
+    display: flex;
+    gap: 2rem;
+}
+
+#quiz-progress-text {
+    width: 100px;
+    text-align: right;
+}
+
+#quiz meter {
+    width: 100%;
 }
